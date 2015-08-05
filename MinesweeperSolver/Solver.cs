@@ -18,9 +18,12 @@ namespace MinesweeperSolver
     /// </summary>
     static class Solver
     {
-        public static void Solve()
+        /// <summary>
+        /// Get everything we see on the screen, and return it as a bitmap.
+        /// </summary>
+        /// <returns></returns>
+        public static Bitmap GetScreenBitmap()
         {
-            //First we must see the field.
             var bmpScreenshot = new Bitmap(Screen.PrimaryScreen.Bounds.Width,
                 Screen.PrimaryScreen.Bounds.Height,
                 PixelFormat.Format32bppArgb);
@@ -31,6 +34,13 @@ namespace MinesweeperSolver
                 Screen.PrimaryScreen.Bounds.Size,
                 CopyPixelOperation.SourceCopy);
             }
+            return bmpScreenshot;
+        }
+
+        public static void Solve()
+        {
+            //First we must see the field.
+            Bitmap bmpScreenshot = GetScreenBitmap();
 
 
             int windowX;

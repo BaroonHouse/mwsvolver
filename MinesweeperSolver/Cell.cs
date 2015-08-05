@@ -31,13 +31,13 @@ namespace MinesweeperSolver
 
         public string FileName
         {
-            get { return ToFileName(Number); }
+            get { return ToFileName(_number); }
             set { Number = ToNumber(value); }
         }
 
         private string ToFileName(int number)
         {
-            Contract.Requires(familiarFieldsNumbers.Length == familiarFieldsFileNames.Length);
+            //Contract.Requires(familiarFieldsNumbers.Length == familiarFieldsFileNames.Length);
             for (int i = 0; i < familiarFieldsFileNames.Length; i++)
             {
                 if (familiarFieldsNumbers[i] == number) return familiarFieldsFileNames[i];
