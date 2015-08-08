@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
 using System.Diagnostics.Contracts;
-
+/*
 namespace MinesweeperSolver
 {
     /// <summary>
@@ -12,13 +8,6 @@ namespace MinesweeperSolver
     /// </summary>
     struct Cell
     {
-        public static readonly string[] familiarFieldsFileNames = new string[] 
-        { "_", "0", "1", "2", "3", "4", "5", "6", "7", "8", "+", "X", "F", "W", "O" };
-        private static readonly int[] familiarFieldsNumbers = new int[] 
-        { -1,   0,   1,   2,   3,   4,   5,   6,   7,   8,  -2,  -3,  -4,  -5,  -6 };
-
-        private int _number;
-
         public bool IsNumber { get { return _number > 0; } }
         public bool IsFlag { get { return _number == -4; } }
         public bool IsUnknown { get { return _number == -1; } }
@@ -35,24 +24,27 @@ namespace MinesweeperSolver
             set { Number = ToNumber(value); }
         }
 
+        private int _number;
+
         private string ToFileName(int number)
         {
             //Contract.Requires(familiarFieldsNumbers.Length == familiarFieldsFileNames.Length);
-            for (int i = 0; i < familiarFieldsFileNames.Length; i++)
+            for (int i = 0; i < Solver.familiarFieldsFileNames.Length; i++)
             {
-                if (familiarFieldsNumbers[i] == number) return familiarFieldsFileNames[i];
+                if (Solver.familiarFieldsNumbers[i] == number) return Solver.familiarFieldsFileNames[i];
             }
             throw new Exception("Unsupported parameter.");
         }
 
         private int ToNumber(string fileName)
         {
-            Contract.Requires(familiarFieldsNumbers.Length == familiarFieldsFileNames.Length);
-            for (int i = 0; i < familiarFieldsFileNames.Length; i++)
+            Contract.Requires(Solver.familiarFieldsNumbers.Length == Solver.familiarFieldsFileNames.Length);
+            for (int i = 0; i < Solver.familiarFieldsFileNames.Length; i++)
             {
-                if (familiarFieldsFileNames[i] == fileName) return familiarFieldsNumbers[i];
+                if (Solver.familiarFieldsFileNames[i] == fileName) return Solver.familiarFieldsNumbers[i];
             }
             throw new Exception("Unsupported parameter.");
         }
     }
 }
+*/
