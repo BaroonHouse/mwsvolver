@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.solveButton = new System.Windows.Forms.Button();
-            this.debugButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // solveButton
@@ -42,26 +41,15 @@
             this.solveButton.UseVisualStyleBackColor = true;
             this.solveButton.Click += new System.EventHandler(this.solveButton_Click);
             // 
-            // debugButton
-            // 
-            this.debugButton.Location = new System.Drawing.Point(13, 43);
-            this.debugButton.Name = "debugButton";
-            this.debugButton.Size = new System.Drawing.Size(75, 23);
-            this.debugButton.TabIndex = 1;
-            this.debugButton.Text = "Debug";
-            this.debugButton.UseVisualStyleBackColor = true;
-            this.debugButton.Click += new System.EventHandler(this.debugButton_Click);
-            // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(116, 80);
-            this.Controls.Add(this.debugButton);
+            this.ClientSize = new System.Drawing.Size(116, 49);
             this.Controls.Add(this.solveButton);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Mine";
             this.ResumeLayout(false);
 
@@ -70,7 +58,6 @@
         #endregion
 
         private System.Windows.Forms.Button solveButton;
-        private System.Windows.Forms.Button debugButton;
     }
 }
 

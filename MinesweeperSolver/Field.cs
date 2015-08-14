@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace MinesweeperSolver
 {
     /// <summary>
-    /// Keeping a track of mine field and every cell in it.
+    /// This is a representation of a minefield.
     /// </summary>
     class Field
     {
@@ -27,16 +27,25 @@ namespace MinesweeperSolver
         private int _fieldXOnScreen;
         private int _fieldYOnScreen;
 
+        /// <summary>
+        /// Creates new representation of a minefield.
+        /// </summary>
         internal Field()
         {
             _theField = new ImageFilesKeeper.PossibleFieldsEnum[_width, _height];
         }
 
+        /// <summary>
+        /// Number of columns in field.
+        /// </summary>
         internal int Width
         {
             get { return _width; }
         }
 
+        /// <summary>
+        /// Number of rows in field.
+        /// </summary>
         internal int Height
         {
             get { return _height; }
@@ -226,7 +235,7 @@ namespace MinesweeperSolver
         /// <param name="windowX">X coordinate of a window.</param>
         /// <param name="windowY">Y coordinate of a window.</param>
         /// <param name="fieldX">X coordinate of left upper courner of left upper cell.</param>
-        /// <param name="fieldY">Y co... you have an idea.</param>
+        /// <param name="fieldY">Y co... you got an idea.</param>
         static void FindMinesweeperWindow(Bitmap bmpScreenshot, out int windowX, out int windowY, out int fieldX, out int fieldY)
         {
             bool found = false;
@@ -261,6 +270,11 @@ namespace MinesweeperSolver
             if (!found) throw new Exception("Minesweeper window not found!");
             windowX = windowX - 247;
             windowY = windowY - 18;
+            if (bmpScreenshot.GetPixel(windowX, windowY).ToArgb() != Color.Silver.ToArgb())
+            {
+                throw new Exception("Please set Minesweeper to an expert mode!");
+            }
+            //MessageBox.Show(bmpScreenshot.GetPixel(windowX, windowY).ToString());
             //save the first square, for debugging
             //place cursor on the first square
             //734.178 -- yellow smiley's head's top
@@ -269,6 +283,11 @@ namespace MinesweeperSolver
 
             fieldX = windowX + 10;
             fieldY = windowY + 53;
+            //MessageBox.Show(bmpScreenshot.GetPixel(fieldX, fieldY).ToString());
+            if (bmpScreenshot.GetPixel(fieldX, fieldY).ToArgb() != Color.White.ToArgb())
+            {
+                throw new Exception("Please set Minesweeper to an expert mode!");
+            }
         }
 
 

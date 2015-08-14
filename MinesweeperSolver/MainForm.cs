@@ -17,10 +17,6 @@ namespace MinesweeperSolver
             Solver.Solve();
         }
 
-        private void debugButton_Click(object sender, EventArgs e)
-        {
-            
-        }
 
     }
 }
