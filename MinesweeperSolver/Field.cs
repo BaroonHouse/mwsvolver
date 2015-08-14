@@ -18,7 +18,7 @@ namespace MinesweeperSolver
     {
         const int _width = 30;
         const int _height = 16;
-        readonly int[,] _theField;
+        readonly ImageFilesKeeper.PossibleFieldsEnum[,] _theField;
 
         /// <summary>
         /// Set to true if data in this class may differ from that is on the screen.
@@ -29,7 +29,7 @@ namespace MinesweeperSolver
 
         internal Field()
         {
-            _theField = new int[_width,_height];
+            _theField = new ImageFilesKeeper.PossibleFieldsEnum[_width, _height];
         }
 
         internal int Width
@@ -42,6 +42,12 @@ namespace MinesweeperSolver
             get { return _height; }
         }
 
+        /// <summary>
+        /// Returns Cell at coordinates x and y.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         internal Cell GetCell(int x, int y)
         {
             if (0 <= x && x < _width && 0 <= y && y < _height) return new Cell(this, x, y);
@@ -63,6 +69,26 @@ namespace MinesweeperSolver
             }
         }
 
+        /// <summary>
+        /// Returns true if no cells in a field were clicked. Returns false if even one cell was clicked.
+        /// </summary>
+        /// <returns></returns>
+        internal bool HasNoClickedCells()
+        {
+            foreach (var cell in IterateAllCells())
+            {
+                if (cell.EnumRepresentation != ImageFilesKeeper.PossibleFieldsEnum.Unknown)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Creates a DeepCopy of a method.
+        /// </summary>
+        /// <returns></returns>
         internal Field DeepCopy()
         {
             var result = new Field();
@@ -70,14 +96,14 @@ namespace MinesweeperSolver
             {
                 for (int x = 0; x < _width; x++)
                 {
-                    result.GetCell(x, y).IntRepresentation = this.GetCell(x, y).IntRepresentation;
+                    result.GetCell(x, y).EnumRepresentation = this.GetCell(x, y).EnumRepresentation;
                 }
             }
             return result;
         }
 
         /// <summary>
-        /// Very usefull for debugging. Font isn't monospaced, so it isn't very pretty.
+        /// Displays content of Field object via MessageBox. Very usefull for debugging. Font isn't monospaced, so it isn't very pretty.
         /// </summary>
         internal void ShowViaMessageBox()
         {
@@ -147,7 +173,7 @@ namespace MinesweeperSolver
                     if (BitmapsAreSame(cellBitmap, ImageFilesKeeper.CellBitmaps[i]))
                     {
                         isFamiliar = true;
-                        this.GetCell(cell.X, cell.Y).IntRepresentation = ImageFilesKeeper.CellPossibleNumbers[i];
+                        this.GetCell(cell.X, cell.Y).EnumRepresentation = (ImageFilesKeeper.PossibleFieldsEnum) i;
                         break;
                     }
                 }
@@ -394,7 +420,13 @@ namespace MinesweeperSolver
             /// <summary>
             /// Does this cell contains a number? Number of mines, from 0 to 8?
             /// </summary>
-            internal bool IsNumberOfMines { get { return IntRepresentation >= 0 && IntRepresentation <= 8; } }
+            internal bool IsNumberOfMines
+            {
+                get
+                {
+                    return ((int)EnumRepresentation) >= 0 && ((int)EnumRepresentation) <= 8;
+                }
+            }
 
             /// <summary>
             /// Does this cell contains a flag?
@@ -434,45 +466,67 @@ namespace MinesweeperSolver
             {
                 get
                 {
-                    if (IsNumberOfMines) {return IntRepresentation - ToNumber("0");}
-                    else {throw new Exception("This isn't a number, something is wrong.");}
+                    if (IsNumberOfMines) { return (int)EnumRepresentation; }
+                    else {throw new Exception("This isn't a number, something is wrong. You should check if this is a number of mines before using this property.");}
                 }
             }
 
+            /// <summary>
+            /// Value of a cell.
+            /// </summary>
             internal ImageFilesKeeper.PossibleFieldsEnum EnumRepresentation
             {
-                get { return (ImageFilesKeeper.PossibleFieldsEnum) IntRepresentation; }
-                set { IntRepresentation = (int) value; }
-            }
-
-            /// <summary>
-            /// Get or set an integer representation of the field.
-            /// Look inside ImageFilesKeeper.cs for details on how it works.
-            /// </summary>
-            internal int IntRepresentation
-            {
-                get { return _field._theField[X,Y]; }
+                get { return _field._theField[X, Y]; }
                 set { _field._theField[X, Y] = value; }
             }
 
+
             /// <summary>
-            /// Same as IntRepresentation, but is a string.
+            /// Same as EnumRepresentation, but is a string.
             /// </summary>
             internal string FileName
             {
-                get { return ToFileName(IntRepresentation); }
-                set { IntRepresentation = ToNumber(value); }
+                get
+                {
+                    int IntRepresentation = (int) EnumRepresentation;
+                    if (0 <= IntRepresentation && IntRepresentation <= ImageFilesKeeper.CellPossibleStrings.Length)
+                    {
+                        return ImageFilesKeeper.CellPossibleStrings[IntRepresentation];
+                    }
+                    else
+                    {
+                        throw new Exception("Name not found.");
+                    }
+                    
+                    
+                }
+                set 
+                {
+                    for (int i = 0; i < ImageFilesKeeper.CellPossibleStrings.Length; i++)
+                    {
+                        if (ImageFilesKeeper.CellPossibleStrings[i] == value)
+                        {
+                            EnumRepresentation = (ImageFilesKeeper.PossibleFieldsEnum) i;
+                            return;
+                        }
+                    }
+                    throw new Exception("Name not found.");
+                }
             }
 
             /// <summary>
-            /// Iterates over all cells around current cell. It's smart enough to check for walls.
+            /// Iterates over all cells around current cell.
             /// </summary>
             /// <returns></returns>
             internal IEnumerable<Cell> IterateAllNearbyCells()
             {
                 for (int tempy = Y - 1; tempy <= Y + 1; tempy++) 
                     for (int tempx = X - 1; tempx <= X + 1; tempx++)
-                        if (0 <= tempx && tempx < _field.Width && 0 <= tempy && tempy < _field.Height && !(tempx == X && tempy == X))
+                        if (0 <= tempx && 
+                            tempx < _field.Width && 
+                            0 <= tempy && tempy < _field.Height &&
+                            !(tempx == X && tempy == X)
+                            )
                         {
                             yield return new Cell(_field, tempx, tempy);
                         }
@@ -480,23 +534,6 @@ namespace MinesweeperSolver
 
 
 
-            static string ToFileName(int number)
-            {
-                for (int i = 0; i < ImageFilesKeeper.CellPossibleStrings.Length; i++)
-                {
-                    if (ImageFilesKeeper.CellPossibleNumbers[i] == number) return ImageFilesKeeper.CellPossibleStrings[i];
-                }
-                throw new Exception("Name not found.");
-            }
-
-            static int ToNumber(string fileName)
-            {
-                for (int i = 0; i < ImageFilesKeeper.CellPossibleStrings.Length; i++)
-                {
-                    if (ImageFilesKeeper.CellPossibleStrings[i] == fileName) return ImageFilesKeeper.CellPossibleNumbers[i];
-                }
-                throw new Exception("IntRepresentation not found.");
-            }
 
             [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
             private static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);

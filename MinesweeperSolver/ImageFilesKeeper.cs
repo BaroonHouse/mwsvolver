@@ -31,28 +31,25 @@ namespace MinesweeperSolver
             { "0", "1", "2", "3", "4", "5", "6", "7", "8", "_", "+", "X", "F", "W", "O" };
 
         /// <summary>
-        /// Same thing as CellPossibleStrings, but numbers are used. Int is more compact than string, so...
+        /// This enum is what actually is stored in array of Field. Same as a CellPossibleStrings.
         /// </summary>
-        internal static readonly int[] CellPossibleNumbers = new int[CellLength] 
-            {  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,  14  };
-
         internal enum PossibleFieldsEnum
         {
-            ZeroMines,  //"0"
-            OneMine,    //"1"
-            TwoMines,   //...
+            ZeroMines,      //"0"
+            OneMine,        //"1"
+            TwoMines,       //...
             ThreeMines,
             FourMines,
             FiveMines,
             SixMines,
             SevenMines,
-            EightMies,  //"8"
-            Unknown,    //"_"
-            Mine,       //"+"
+            EightMies,      //"8"
+            Unknown,        //"_"
+            Mine,           //"+"
             ExplodedMine,   //"X"
-            Flag,       //"F"
+            Flag,           //"F"
             QuestionMark,   //"W", actually "?" but limitation
-            Debug1,     //"O"
+            Debug1,         //"O"
 
         }
 

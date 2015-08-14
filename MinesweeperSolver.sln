@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinesweeperSolver", "MinesweeperSolver\MinesweeperSolver.csproj", "{E3015189-AB96-439E-BB17-B32940C23738}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{0EEECA01-57BA-4446-A2D9-496B46E2A867}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,10 +13,6 @@ Global
 		{E3015189-AB96-439E-BB17-B32940C23738}.Debug|x86.Build.0 = Debug|x86
 		{E3015189-AB96-439E-BB17-B32940C23738}.Release|x86.ActiveCfg = Release|x86
 		{E3015189-AB96-439E-BB17-B32940C23738}.Release|x86.Build.0 = Release|x86
-		{0EEECA01-57BA-4446-A2D9-496B46E2A867}.Debug|x86.ActiveCfg = Debug|x86
-		{0EEECA01-57BA-4446-A2D9-496B46E2A867}.Debug|x86.Build.0 = Debug|x86
-		{0EEECA01-57BA-4446-A2D9-496B46E2A867}.Release|x86.ActiveCfg = Release|x86
-		{0EEECA01-57BA-4446-A2D9-496B46E2A867}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
