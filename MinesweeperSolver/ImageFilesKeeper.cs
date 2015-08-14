@@ -19,8 +19,8 @@ namespace MinesweeperSolver
         /// <summary>
         /// This array keeps representation of cells as text. This is easier to understand than just numbers, I hope?
         /// Also they are used as filenames.
+        /// /// 0 to 8 is... you should be able to guess if you played minesweeper at least once.
         /// _ is a yet unclicked cell
-        /// 0 to 8 is... you should be able to guess if you played minesweeper at least once.
         /// + is a bomb
         /// X is a red bomb, the bomb you was lucky to click
         /// F is a flag
@@ -28,13 +28,33 @@ namespace MinesweeperSolver
         /// O is just for debugging, it can't be met in the game. O.png is just a random garbage.
         /// </summary>
         internal static readonly string[] CellPossibleStrings = new string[CellLength] 
-            { "_", "0", "1", "2", "3", "4", "5", "6", "7", "8", "+", "X", "F", "W", "O" };
+            { "0", "1", "2", "3", "4", "5", "6", "7", "8", "_", "+", "X", "F", "W", "O" };
 
         /// <summary>
         /// Same thing as CellPossibleStrings, but numbers are used. Int is more compact than string, so...
         /// </summary>
         internal static readonly int[] CellPossibleNumbers = new int[CellLength] 
-            { -1,   0,   1,   2,   3,   4,   5,   6,   7,   8,  -2,  -3,  -4,  -5,  -6  };
+            {  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,  14  };
+
+        internal enum PossibleFieldsEnum
+        {
+            ZeroMines,  //"0"
+            OneMine,    //"1"
+            TwoMines,   //...
+            ThreeMines,
+            FourMines,
+            FiveMines,
+            SixMines,
+            SevenMines,
+            EightMies,  //"8"
+            Unknown,    //"_"
+            Mine,       //"+"
+            ExplodedMine,   //"X"
+            Flag,       //"F"
+            QuestionMark,   //"W", actually "?" but limitation
+            Debug1,     //"O"
+
+        }
 
         
         private static readonly Bitmap[] _CellBitmaps = new Bitmap[CellLength];
